@@ -6,9 +6,14 @@ from django.shortcuts import redirect, render
 # from .models import Task
 from django.http import HttpResponse
 from django.template import loader
+
 # from django.urls import
 
 # Create your views here.
+
+"""
+Index function is for the home page of the website.
+"""
 
 
 def index(request):
