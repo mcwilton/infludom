@@ -91,3 +91,7 @@ class Project(models.Model):
 
     def __str__(self):
         return self.project_name
+
+
+class Application(models.Model):
+    applicant_name = models.OneToOneField(User, on_delete=models.CASCADE)
