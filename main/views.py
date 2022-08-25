@@ -10,16 +10,16 @@ from django.template import loader
 
 # Create your views here.
 
-#
-# def index(request):
-#     template = loader.get_template('index.html')
-#     tasks = Task.objects.order_by("id")
-#     more_tasks = Task.objects.filter()
-#     context = {'tasks': tasks}
-#     context.update(csrf(request))
-#     # return render('index.html', context)
-#     return HttpResponse(template.render(context, request))
-#
+
+def index(request):
+    template = loader.get_template('index.html')
+    # tasks = Task.objects.order_by("id")
+    # more_tasks = Task.objects.filter()
+    context = {'tasks': "welcome"}
+    context.update(csrf(request))
+    # return render('index.html', context)
+    return HttpResponse(template.render(context, request))
+
 #
 # def add(request):
 #     item = Task(name=request.POST["name"])

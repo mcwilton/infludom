@@ -7,8 +7,6 @@ phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                      "allowed.")
 
 
-# Create your models here.
-
 class Creator(models.Model):
     STATUS_CHOICES = (
         ("Female", "Female"),
