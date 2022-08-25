@@ -13,13 +13,13 @@ import os
 from pathlib import Path
 
 
-from django_secret_key import key_generator
+from djangotools.django_secret_key import key_generator
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = key_generator()
+
 
 
 # Quick-start development settings - unsuitable for production
