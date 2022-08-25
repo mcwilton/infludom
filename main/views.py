@@ -6,6 +6,9 @@ from django.shortcuts import redirect, render
 # from .models import Task
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from .serializer import TalentSerializer, ProjectSerializer
 
 # from django.urls import
 
@@ -24,6 +27,22 @@ def index(request):
     context.update(csrf(request))
     # return render('index.html', context)
     return HttpResponse(template.render(context, request))
+
+
+class TalentViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = TalentSerializer
+
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = ProjectSerializer
 
 #
 # def add(request):
