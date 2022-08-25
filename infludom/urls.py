@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.template.defaulttags import url
 from django.urls import include, path
+from rest_framework_simplejwt import views as jwt_views
 from rest_framework import routers
 from main import views
-from rest_framework_swagger.views import get_swagger_view
+# from rest_framework_swagger.views import get_swagger_view
 
 
-schema_view = get_swagger_view(title='Pastebin API')
+# schema_view = get_swagger_view(title='Pastebin API')
 
 
 router = routers.DefaultRouter()
@@ -30,11 +31,13 @@ router.register(r'projects', views.ProjectViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('main.urls')),
-    path('', include(router.urls)),
+    path('', include('main.urls')),
+    path('api_urls/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^$', schema_view)
-]
+    # url(r'^$', schema_view)
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+ ]
 
 
 
