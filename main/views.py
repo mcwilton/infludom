@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView
 
 from django.template.context_processors import csrf
-from django.shortcuts import  redirect, render
-from .models import Task
+from django.shortcuts import redirect, render
+# from .models import Task
 from django.http import HttpResponse
 from django.template import loader
 # from django.urls import
