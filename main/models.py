@@ -87,11 +87,13 @@ class Project(models.Model):
     project_name = models.CharField(max_length=255)
     description = models.TextField(max_length=500)
     location = models.CharField(max_length=255)
-    roles = models.ForeignKey(Ethnicity, models.SET_NULL, null=True)
+    ethnicity = models.ForeignKey(Ethnicity, models.SET_NULL, null=True)
+    role_name = models.ForeignKey(Role, models.SET_NULL)
 
     def __str__(self):
         return self.project_name
 
 
 class Application(models.Model):
-    applicant_name = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.OneToOneField(Talent, on_delete=models.CASCADE)
+    role_name = models.ManyToOneRel(Role, on_delete=models.CASCADE)
