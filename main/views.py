@@ -3,12 +3,12 @@ from django.views.generic.base import TemplateView
 
 from django.template.context_processors import csrf
 from django.shortcuts import redirect, render
-from .models import Talent, Project
+from .models import Talent, Project, Company, Application, Role
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from .serializer import TalentSerializer, ProjectSerializer
+from rest_framework import viewsets, generics
+from .serializer import TalentSerializer, ProjectSerializer, CompanySerializer, ApplicationSerializer, RoleSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -26,6 +26,11 @@ class TalentViews(APIView):
             return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
         else:
             return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TalentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Talent.objects.all()
+    serializer_class = TalentSerializer
 
 
 def index(request):
