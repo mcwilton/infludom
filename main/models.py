@@ -32,9 +32,9 @@ class Talent(models.Model):
     gender = models.CharField(choices=GENDER_CHOICES, default="Prefer Not To Say", max_length=250)
     # gender_custom = models.CharField(max_length=200, blank=True)
     ethnicity = models.ForeignKey(Ethnicity, models.SET_NULL, null=True)
-    age = models.IntegerField()
-    weight = models.DecimalField(max_digits=6, max_length=10, decimal_places=4)
-    height = models.DecimalField(max_digits=6, max_length=10, decimal_places=4)
+    age = models.CharField(max_length=3)
+    weight = models.DecimalField(max_digits=6, max_length=10, decimal_places=4, null=True)
+    height = models.DecimalField(max_digits=6, max_length=10, decimal_places=4, null=True)
     email = models.EmailField(max_length=254)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -46,12 +46,12 @@ class Talent(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Talent.objects.create(user=instance)
+        Talent.objects.create(name=instance)
 
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    instance.talent.save()
 
 
 class Company(models.Model):
@@ -87,13 +87,16 @@ class Project(models.Model):
     project_name = models.CharField(max_length=255)
     description = models.TextField(max_length=500)
     location = models.CharField(max_length=255)
-    ethnicity = models.ForeignKey(Ethnicity, models.SET_NULL, null=True)
-    role_name = models.ForeignKey(Role, models.SET_NULL)
+    ethnicity = models.ForeignKey(Ethnicity, on_delete=models.CASCADE, null=False)
+    role_name = models.ForeignKey(Role, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.project_name
 
 
 class Application(models.Model):
-    name = models.OneToOneField(Talent, on_delete=models.CASCADE)
-    role_name = models.ManyToOneRel(Role, on_delete=models.CASCADE)
+    name = models.ForeignKey(Talent, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, default="Role")
+
+    def __str__(self):
+        return self.name

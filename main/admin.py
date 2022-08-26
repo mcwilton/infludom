@@ -1,4 +1,4 @@
-from .models import Project, Company, Ethnicity, Talent, Role
+from .models import Project, Company, Ethnicity, Talent, Role, Application
 from django.contrib import admin
 
 admin.site.site_title = "InfluDom"
@@ -22,9 +22,9 @@ class Company(admin.ModelAdmin):
 
 @admin.register(Project)
 class Project(admin.ModelAdmin):
-    list_display = ('project_name', 'description', 'location', 'roles')
-    list_filter = ('location', 'roles')
-    search_fields = ('location', 'roles')
+    list_display = ('project_name', 'description', 'location', 'role_name')
+    list_filter = ('location', 'role_name')
+    search_fields = ('location', 'role_name')
 
 
 @admin.register(Role)
@@ -39,3 +39,10 @@ class Ethnicity(admin.ModelAdmin):
     list_display = ('ethnicity',)
     list_filter = ('ethnicity',)
     search_fields = ('ethnicity',)
+
+
+@admin.register(Application)
+class Application(admin.ModelAdmin):
+    list_display = ('name', 'role')
+    list_filter = ('name', 'role')
+    search_fields = ('name', 'role')

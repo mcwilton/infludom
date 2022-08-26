@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Talent
+from .models import Project, Talent, Company, Application, Role
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -13,3 +13,21 @@ class TalentSerializer(serializers.ModelSerializer):
         model = Talent
         fields = '__all__'
         # exclude = ['id']
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = '__all__'
+
+
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = '__all__'
+
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = '__all__'

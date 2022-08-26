@@ -3,20 +3,29 @@ from django.views.generic.base import TemplateView
 
 from django.template.context_processors import csrf
 from django.shortcuts import redirect, render
-# from .models import Task
+from .models import Talent, Project
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from .serializer import TalentSerializer, ProjectSerializer
-
-# from django.urls import
-
-# Create your views here.
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 """
 Index function is for the home page of the website.
 """
+
+
+class TalentViews(APIView):
+    def post(self, request):
+        serializer = TalentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 def index(request):
