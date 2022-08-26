@@ -8,16 +8,16 @@ admin.site.index_title = "InfluDom"
 
 @admin.register(Talent)
 class Talent(admin.ModelAdmin):
-    list_display = ('name', 'phone_number', 'music_choice', 'gender', 'ethnicity', 'age', 'weight', 'height', 'email')
-    list_filter = ('name', 'email', 'age', 'gender')
-    search_fields = ('name', 'email', 'age', 'gender')
+    list_display = ('talent_name', 'phone_number', 'gender', 'ethnicity', 'age', 'weight', 'height', 'email')
+    list_filter = ('talent_name', 'email', 'age', 'gender')
+    search_fields = ('talent_name', 'email', 'age', 'gender')
 
 
-@admin.register(Company)
-class Company(admin.ModelAdmin):
-    list_display = ('company_name', 'email', 'description', 'created_at', 'updated_at')
-    list_filter = ('company_name', 'email')
-    search_fields = ('company_name', 'email')
+# @admin.register(Company)
+# class Company(admin.ModelAdmin):
+#     list_display = ('company_name', 'email', 'description', 'created_at', 'updated_at')
+#     list_filter = ('company_name', 'email')
+#     search_fields = ('company_name', 'email')
 
 
 @admin.register(Project)
