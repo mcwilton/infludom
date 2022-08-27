@@ -7,8 +7,8 @@ app_name = 'main'
 #
 urlpatterns = [
     path('registration/company/', CompanyRegistrationView.as_view(), name='register-company'),
-    path('registration/taent/', TalentRegistrationView.as_view(), name='register-talent'),
-
+    path('registration/talent/', TalentRegistrationView.as_view(), name='register-talent'),
+    # http://127.0.0.1:8000/accounts/register/register/
     # path('talents/', TalentViews.as_view()),
     # path('talents/<int:pk>/', views.TalentDetail.as_view()),
     # path('projects/', ProjectViewSet.as_view()),
