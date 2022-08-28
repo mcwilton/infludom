@@ -11,9 +11,20 @@ class RoleSerializer(serializers.ModelSerializer):
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        return Application.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.applicant_name= validated_data.get('title', instance.title)
+        instance.role = validated_data.get('description', instance.description)
+       
+        instance.save()
+        return instance
+
     class Meta:
         model = Application
-        fields = '__all__'
+        fields = ['applicant_name', 'role']
 
 
 class CompanyRegistrationSerializer(RegisterSerializer):

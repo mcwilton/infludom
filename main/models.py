@@ -85,15 +85,15 @@ class Talent(models.Model):
         return self.talent_name
 
 
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Talent.objects.create(name=instance)
-#
-#
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.talent.save()
+@receiver(post_save, sender=User)
+def create_talent_profile(sender, instance, created, **kwargs):
+    if created:
+        Talent.objects.create(name=instance)
+
+
+@receiver(post_save, sender=User)
+def save_talent_profile(sender, instance, **kwargs):
+    instance.talent.save()
 
 
 class Company(models.Model):  #company_profile
@@ -122,5 +122,3 @@ class Project(models.Model):
         return self.project_name
 
 
-class random_table(models.Model):
-    pass
