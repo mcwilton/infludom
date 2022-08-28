@@ -8,8 +8,8 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, generics
-from .serializer import ProjectSerializer
-# from .serializer import  ProjectSerializer, ApplicationSerializer # CompanySerializer, RoleSerializerTalentSerializer
+from .serializer import ProjectSerializer, TalentRegistrationSerializer
+# from .serializer import  ProjectSerializer, ApplicationSerializer # CompanySerializer, RoleSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -22,6 +22,28 @@ from django.shortcuts import render
 from rest_auth.registration.views import RegisterView
 from .serializer import CompanyRegistrationSerializer, TalentRegistrationSerializer, ApplicationSerializer
 from rest_framework.decorators import api_view
+
+
+class TalentViews(APIView):
+    permission_classes = (permissions.AllowAny,)
+    http_method_names = ['get', 'head']
+    def get(self, request, format=None):
+         talents = Talent.objects.all()
+         serializer = TalentRegistrationSerializer(talents, many=True)
+         return Response(serializer.data)
+
+    def post(self, request):
+        serializer = TalentRegistrationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TalentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Talent.objects.all()
+    serializer_class = TalentRegistrationSerializer
 
 
 #
@@ -154,20 +176,7 @@ class ProjectDetailApiView(APIView):
 #     model = Marksheet
 
 
-# class TalentViews(APIView):
-#     def post(self, request):
-#         serializer = TalentSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-#         else:
-#             return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-
-# class TalentDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Talent.objects.all()
-#     serializer_class = TalentSerializer
-#
 
 def index(request):
     template = loader.get_template('index.html')

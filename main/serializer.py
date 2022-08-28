@@ -55,13 +55,14 @@ class CompanyRegistrationSerializer(RegisterSerializer):
 
 
 class TalentRegistrationSerializer(RegisterSerializer):
-    talent = serializers.PrimaryKeyRelatedField(read_only=True, )  # by default allow_null = False
-    country = serializers.CharField(required=True)
+    class Meta:
+        model = Project
+        fields = ['bio', 'phone_number', 'gender']
 
     def get_cleaned_data(self):
         data = super(TalentRegistrationSerializer, self).get_cleaned_data()
         extra_data = {
-            'country': self.validated_data.get('country', ''),
+            'country': self.validated_data.get('bio', ''),
         }
         data.update(extra_data)
         return data
@@ -70,7 +71,7 @@ class TalentRegistrationSerializer(RegisterSerializer):
         user = super(TalentRegistrationSerializer, self).save(request)
         user.is_buyer = True
         user.save()
-        talent = Talent(talent=user, country=self.cleaned_data.get('country'))
+        talent = Talent(talent=user, country=self.cleaned_data.get('bio'))
         talent.save()
         return user
 
