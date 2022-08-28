@@ -25,9 +25,9 @@ from rest_framework.decorators import api_view
 
 
 class TalentViews(APIView):
-    permission_classes = (permissions.AllowAny,)
-    http_method_names = ['get', 'head']
-    def get(self, request, format=None):
+    # permission_classes = (permissions.AllowAny,)
+    # http_method_names = ['get', 'head']
+    def get(self, request,  format=None):
          talents = Talent.objects.all()
          serializer = TalentRegistrationSerializer(talents, many=True)
          return Response(serializer.data)
@@ -35,7 +35,7 @@ class TalentViews(APIView):
     def post(self, request):
         serializer = TalentRegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(request)
             return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
         else:
             return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -46,15 +46,12 @@ class TalentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TalentRegistrationSerializer
 
 
-#
-# @api_view(['GET', 'POST', 'DELETE'])
-# class CompanyRegistrationView(RegisterView):
-#     serializer_class = CompanyRegistrationSerializer
-#
-#
-# @api_view(['GET', 'POST', 'DELETE'])
-# class TalentRegistrationView(RegisterView):
-#     serializer_class = TalentRegistrationSerializer
+class CompanyRegistrationView(APIView):
+    serializer_class = CompanyRegistrationSerializer
+
+
+class TalentRegistrationView(APIView):
+    serializer_class = TalentRegistrationSerializer
 
 
 class ProjectsView(APIView):
@@ -94,7 +91,7 @@ class ProjectsView(APIView):
 
 class ProjectDetailApiView(APIView):
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, project_name_id, company_name_id):
         '''

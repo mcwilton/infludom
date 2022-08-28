@@ -28,7 +28,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
 
 class CompanyRegistrationSerializer(RegisterSerializer):
-    seller = serializers.PrimaryKeyRelatedField(read_only=True, )  # by default allow_null = False
+    company = serializers.PrimaryKeyRelatedField(read_only=True, )  # by default allow_null = False
     area = serializers.CharField(required=True)
     address = serializers.CharField(required=True)
     description = serializers.CharField(required=True)
@@ -59,21 +59,21 @@ class TalentRegistrationSerializer(RegisterSerializer):
         model = Talent
         fields = ['bio', 'phone_number', 'gender']
 
-    # def get_cleaned_data(self):
-    #     data = super(TalentRegistrationSerializer, self).get_cleaned_data()
-    #     extra_data = {
-    #         'bio': self.validated_data.get('bio', ''),
-    #     }
-    #     data.update(extra_data)
-    #     return data
+    def get_cleaned_data(self):
+        data = super(TalentRegistrationSerializer, self).get_cleaned_data()
+        extra_data = {
+            'bio': self.validated_data.get('bio', ''),
+        }
+        data.update(extra_data)
+        return data
 
-    # def save(self, request):
-    #     user = super(TalentRegistrationSerializer, self).save(request)
-    #     user.is_talent = True
-    #     user.save()
-    #     talent = Talent(talent=user, bio=self.cleaned_data.get('bio'))
-    #     talent.save()
-    #     return user
+    def save(self, request):
+        user = super(TalentRegistrationSerializer, self).save(request)
+        user.is_talent = True
+        user.save()
+        talent = Talent(talent=user, bio=self.cleaned_data.get('bio'))
+        talent.save()
+        return user
 
 
 

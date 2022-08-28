@@ -65,9 +65,9 @@ class Talent(models.Model):
         ("Non-binary", "Non-binary"),
         ("Prefer Not To Say", "Prefer Not To Say")
     )
-    # talent_name = models.OneToOneField(
-        # settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='talent', default="")
-    username = models.OneToOneField(User, on_delete=models.CASCADE, related_name='talentid')
+    username = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='talent', default="")
+    # username = models.OneToOneField(User, on_delete=models.CASCADE, related_name='talentid')
     # username = models.OneToOneField(User, on_delete=models.CASCADE, related_name='talented')
     bio = models.TextField(max_length=500, blank=True)
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)  # validators should be a list
@@ -83,13 +83,13 @@ class Talent(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.talent_name
+        return self.talent.username
 
 
 @receiver(post_save, sender=User)
 def create_talent_profile(sender, instance, created, **kwargs):
     if created:
-        Talent.objects.create(talent_name=instance)
+        Talent.objects.create(username=instance)
 
 
 @receiver(post_save, sender=User)
@@ -107,7 +107,18 @@ class Company(models.Model):  #company_profile
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.company_name
+        return self.company.company_name
+
+
+# @receiver(post_save, sender=User)
+# def create_company_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Company.objects.create(company_name=instance)
+
+
+# @receiver(post_save, sender=User)
+# def save_company_profile(sender, instance, **kwargs):
+#     instance.company.save()
 
 
 class Project(models.Model):

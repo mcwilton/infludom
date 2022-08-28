@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'infludom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'infludomdb.sqlite3',
+        'NAME': BASE_DIR / 'infludomdb2.sqlite3',
     }
 }
 
@@ -176,3 +176,9 @@ REST_REGISTRATION = {
 
 
 AUTH_USER_MODEL="main.User"
+
+
+
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# ACCOUNT_EMAIL_VERIFICATION = 'none
