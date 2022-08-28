@@ -18,7 +18,7 @@ urlpatterns = [
     path('application/', ApplicationView.as_view()),
     # path('talents/<int:pk>/', views.TalentDetail.as_view()),
     path('projects/', ProjectsView.as_view()),
-    path('api/<int:project_id>/', ProjectDetailApiView.as_view()),
+    path('projects/<int:project_id>/', ProjectDetailApiView.as_view()),
     path('applications/', ApplicationView.as_view()),
     path('applications/<int:pk>', ApplicationView.as_view()),
     # path('', HomePageView.as_view(), name='home'),
