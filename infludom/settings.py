@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'rest_auth',
     'rest_auth.registration',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'corsheaders',
     #'rest_framework_swagger',
 
 ]
@@ -60,6 +61,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'infludom.urls'
@@ -89,7 +93,7 @@ WSGI_APPLICATION = 'infludom.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db3.sqlite3',
+        'NAME': BASE_DIR / 'db4.sqlite3',
     }
 }
 

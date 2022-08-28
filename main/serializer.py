@@ -4,6 +4,18 @@ from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
 
 
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Role
+        fields = '__all__'
+
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Application
+        fields = '__all__'
+
+
 class CompanyRegistrationSerializer(RegisterSerializer):
     seller = serializers.PrimaryKeyRelatedField(read_only=True, )  # by default allow_null = False
     area = serializers.CharField(required=True)
@@ -56,7 +68,8 @@ class TalentRegistrationSerializer(RegisterSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ['project_name', 'description', 'location', 'roles']
+        fields = '__all__'
+        # fields = ['project_name', 'description', 'location', 'roles']
 
 
 # class TalentSerializer(serializers.ModelSerializer):
@@ -71,13 +84,4 @@ class ProjectSerializer(serializers.ModelSerializer):
 #         fields = '__all__'
 
 
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Role
-        fields = '__all__'
 
-
-class ApplicationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Application
-        fields = '__all__'

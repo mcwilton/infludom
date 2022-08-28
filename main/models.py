@@ -31,6 +31,33 @@ class Ethnicity(models.Model):
         return '%s' % self.ethnicity
 
 
+class Role(models.Model):
+    GENDER_REQUIREMENTS = (
+        ("Female", "Female"),
+        ("Male", "Male"),
+        ("Non-binary", "Non-binary"),
+        ("Prefer Not To Say", "Prefer Not To Say")
+    )
+    role_name = models.CharField(max_length=255, null=False, default="Role Name")
+    talent_age = models.IntegerField()
+    talent_gender = models.CharField(choices=GENDER_REQUIREMENTS, default="Prefer Not To Say", max_length=250)
+    talent_ethnicity = models.ForeignKey(Ethnicity, models.SET_NULL, null=True, related_name=' role set+')
+    talent_weight = models.DecimalField(max_digits=6, max_length=10, decimal_places=2)
+    talent_height = models.DecimalField(max_digits=6, max_length=10, decimal_places=2)
+
+    def __str__(self):
+        return self.talent_gender
+
+
+class Application(models.Model):
+    applicant_name = models.CharField(max_length=255)
+    # name = models.ForeignKey(Talent, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, default="Role")
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.applicant_name
+
 class Talent(models.Model):
     GENDER_CHOICES = (
         ("Female", "Female"),
@@ -69,7 +96,7 @@ class Talent(models.Model):
 #     instance.talent.save()
 
 
-class Company(models.Model):
+class Company(models.Model):  #company_profile
     company_name = models.OneToOneField(
       settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, default="")
     # company_name = models.CharField(max_length=255)
@@ -82,39 +109,18 @@ class Company(models.Model):
         return self.company_name
 
 
-class Role(models.Model):
-    GENDER_REQUIREMENTS = (
-        ("Female", "Female"),
-        ("Male", "Male"),
-        ("Non-binary", "Non-binary"),
-        ("Prefer Not To Say", "Prefer Not To Say")
-    )
-    role_name = models.CharField(max_length=255, null=False, default="Role Name")
-    talent_age = models.IntegerField()
-    talent_gender = models.CharField(choices=GENDER_REQUIREMENTS, default="Prefer Not To Say", max_length=250)
-    talent_ethnicity = models.ForeignKey(Ethnicity, models.SET_NULL, null=True, related_name=' role set+')
-    talent_weight = models.DecimalField(max_digits=6, max_length=10, decimal_places=2)
-    talent_height = models.DecimalField(max_digits=6, max_length=10, decimal_places=2)
-
-    def __str__(self):
-        return self.talent_gender
-
-
 class Project(models.Model):
     project_name = models.CharField(max_length=255)
-    # company_name = models.ForeignKey(Company, on_delete=models.CASCADE, null=False)vv
+    company_name = models.ForeignKey(Company, on_delete=models.CASCADE, null=False)
     description = models.TextField(max_length=500)
     location = models.CharField(max_length=255)
     ethnicity = models.ForeignKey(Ethnicity, on_delete=models.CASCADE, null=False)
     role_name = models.ForeignKey(Role, on_delete=models.CASCADE, default=1)
 
+
     def __str__(self):
         return self.project_name
 
 
-class Application(models.Model):
-    name = models.ForeignKey(Talent, on_delete=models.CASCADE)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE, default="Role")
-
-    def __str__(self):
-        return self.name
+class random_table(models.Model):
+    pass

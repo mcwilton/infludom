@@ -43,6 +43,6 @@ class Ethnicity(admin.ModelAdmin):
 
 @admin.register(Application)
 class Application(admin.ModelAdmin):
-    list_display = ('name', 'role')
-    list_filter = ('name', 'role')
-    search_fields = ('name', 'role')
+    list_display = ('applicant_name', 'role')
+    list_filter = ('applicant_name', 'role')
+    search_fields = ('applicant_name', 'role')
