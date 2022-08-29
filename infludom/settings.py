@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+import django_on_heroku
 from infludom.django_secret_key import key_generator
 import  environ
 
@@ -27,13 +27,13 @@ SECRET_KEY = key_generator()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-
+django_heroku.settings(locals())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 # DEBUG = int(os.environ.get('DEBUG', default=1))
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'https://optimusea.herokuapp.com/' ]
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 # Application definition
