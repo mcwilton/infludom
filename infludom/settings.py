@@ -27,7 +27,7 @@ SECRET_KEY = key_generator()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-django_heroku.settings(locals())
+django_on_heroku.settings(locals())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 # DEBUG = int(os.environ.get('DEBUG', default=1))
