@@ -45,11 +45,13 @@ INSTALLED_APPS = [
     'rest_registration',
     'allauth',
     'allauth.account',
-    'rest_auth',
-    'rest_auth.registration',
+    # 'rest_auth',
+    # 'rest_auth.registration',
     'rest_framework.authtoken',
     'corsheaders',
-    #'rest_framework_swagger',
+    # 'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
+    'drf_yasg',
+    # 'rest_framework_swagger',
 
 ]
 
@@ -147,12 +149,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 #     'PAGE_SIZE': 10,
 
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ],
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ],
+# 'DEFAULT_AUTHENTICATION_CLASSES': [
+#     'rest_framework_simplejwt.authentication.JWTAuthentication',
+# ],
+# 'DEFAULT_PERMISSION_CLASSES': [
+#     'rest_framework.permissions.IsAuthenticated',
+# ],
 # }
 
 REST_FRAMEWORK = {
@@ -171,13 +173,10 @@ REST_REGISTRATION = {
     'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
     'RESET_PASSWORD_VERIFICATION_ENABLED': False,
 
-     # 'VERIFICATION_FROM_EMAIL': 'no-reply@example.com',
+    # 'VERIFICATION_FROM_EMAIL': 'no-reply@example.com',
 }
 
-
-AUTH_USER_MODEL="main.User"
-
-
+AUTH_USER_MODEL = "main.User"
 
 # ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_AUTHENTICATION_METHOD = 'username'

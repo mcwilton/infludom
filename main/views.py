@@ -19,7 +19,7 @@ from rest_framework.generics import get_object_or_404
 Index function is for the home page of the website.
 """
 from django.shortcuts import render
-from rest_auth.registration.views import RegisterView
+# from rest_auth.registration.views import RegisterView
 from .serializer import CompanyRegistrationSerializer, TalentRegistrationSerializer, ApplicationSerializer
 from rest_framework.decorators import api_view
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Project, Talent, Company, Application, Role
-from rest_auth.registration.serializers import RegisterSerializer
+# from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
 
 
@@ -27,7 +27,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
         fields = ['applicant_name', 'role']
 
 
-class CompanyRegistrationSerializer(RegisterSerializer):
+class CompanyRegistrationSerializer(serializers.ModelSerializer):
     company = serializers.PrimaryKeyRelatedField(read_only=True, )  # by default allow_null = False
     area = serializers.CharField(required=True)
     address = serializers.CharField(required=True)
@@ -54,7 +54,7 @@ class CompanyRegistrationSerializer(RegisterSerializer):
         return user
 
 
-class TalentRegistrationSerializer(RegisterSerializer):
+class TalentRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Talent
         fields = ['bio', 'phone_number', 'gender']
