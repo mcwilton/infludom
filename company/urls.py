@@ -1,18 +1,17 @@
-from rest_framework.urlpatterns import format_suffix_patterns
-from django.urls import path, re_path
-from django.template.defaulttags import url
-from .views import ApplicationView, ProjectsView, ProjectDetailApiView, RoleDetailApiView, RoleView,  CompanyRegistrationView
+from django.urls import path
+from .views import ApplicationView, ApplicationDetail, ProjectView, ProjectsDetail, RoleDetail, RoleView,  CompaniesView, CompanyDetail
 
 app_name = 'company'
 
 
 urlpatterns = [
-    path('projects/', ProjectsView.as_view(), name ='ProjectsView'),
-    path('projects/<int:project_id>/', ProjectDetailApiView.as_view()),
+    path('projects/', ProjectView.as_view(), name ='ProjectsView'),
+    path('projects/<int:project_id>/', ProjectsDetail.as_view()),
     path('applications/', ApplicationView.as_view()),
-    path('applications/<int:pk>', ApplicationView.as_view()),
-    path('registration/', CompanyRegistrationView.as_view()),
+    path('applications/<int:pk>', ApplicationDetail.as_view()),
+    path('registration/', CompaniesView.as_view()),
+    path('registration/<int:pk>', CompanyDetail.as_view()),
     path('roles/', RoleView.as_view(), name ='RoleView'),
-    path('roles/<int:role_name_id>/', RoleDetailApiView.as_view()),
+    path('roles/<int:role_name_id>/', RoleDetail.as_view()),
 
 ]

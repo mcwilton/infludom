@@ -1,33 +1,33 @@
 from rest_framework import serializers
 from .models import Talent
 
+  
+class TalentSerializer(serializers.Serializer):
+    bio = serializers.CharField(required =True)
+    email = serializers.EmailField()
+    talent_gender = serializers.CharField(max_length=200)
+    talent_ethnicity = serializers.CharField(required=True)
+    talent_weight = serializers.DecimalField(required=True, max_digits=4, decimal_places=2)
+    talent_height = serializers.DecimalField(required=True,  max_digits=4, decimal_places=2)
+    age = serializers.IntegerField(required =True)
+    ethnicity = serializers.CharField(required =True)
+    gender = serializers.CharField(required =True)
+    phone_number = serializers.CharField(required =True)
+    
+    def create(self, validated_data):
+        return Role.objects.create(**validated_data)
 
-class TalentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Talent
-        fields = ['bio', 'phone_number', 'gender']
-
-    def get_cleaned_data(self):
-        data = super(TalentSerializer, self).get_cleaned_data()
-        extra_data = {
-            'bio': self.validated_data.get('bio', ''),
-        }
-        data.update(extra_data)
-        return data
-
-    def save(self, request):
-        user = super(TalentSerializer, self).save(request)
-        user.is_talent = True
-        user.save()
-        talent = Talent(talent=user, bio=self.cleaned_data.get('bio'))
-        talent.save()
-        return user
-
-
-# class TalentSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Talent
-#         fields = '__all__'
+    def update(self, instance, validated_data):
+        instance.bio = validated_data.get('bio', instance.bio)
+        instance.age = validated_data.get('age', instance.age)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+        instance.email = validated_data.get('email', instance.email)
+        instance.talent_gender = validated_data.get('talent_gender', instance.talent_gender)
+        instance.talent_ethnicity = validated_data.get('talent_ethnicity', instance.talent_ethnicity)
+        instance.talent_weight = validated_data.get('talent_weight', instance.talent_weight)
+        instance.talent_height = validated_data.get('talent_height', instance.talent_height)
+        instance.save()
+        return instance
 
 
 
