@@ -13,9 +13,14 @@ class TalentSerializer(serializers.Serializer):
     ethnicity = serializers.CharField(required =True)
     gender = serializers.CharField(required =True)
     phone_number = serializers.CharField(required =True)
-    
+
+    def validate_age(self, age):
+        if age < -2 or age > +2:
+            return False
+
     def create(self, validated_data):
-        return Role.objects.create(**validated_data)
+        if self.validate_age() != False:
+            return Talent.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.bio = validated_data.get('bio', instance.bio)
