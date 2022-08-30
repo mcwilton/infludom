@@ -1,13 +1,5 @@
-from django.shortcuts import render
 from .models import Project, Company, Application, Role
-from django.template.context_processors import csrf
-from django.shortcuts import redirect, render
-from django.http import HttpResponse, JsonResponse
-from django.template import loader
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets, generics
 from .serializer import ProjectSerializer, CompanyRegistrationSerializer, ApplicationSerializer, RoleSerializer
-# from .serializer import  ProjectSerializer, ApplicationSerializer # CompanySerializer, RoleSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -38,7 +30,6 @@ class CompanyRegistrationView(APIView):
             'company_name': request.data.get('company_name'),
             'description': request.data.get('description'),
             'email': request.data.get('email'),
-            'description': request.data.get('description'),
             # 'user': request.user.id
         }
         serializer = CompanyRegistrationSerializer(data=data)
@@ -47,6 +38,7 @@ class CompanyRegistrationView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProjectsView(APIView):
     # add permission to check if user is authenticated
@@ -155,7 +147,6 @@ class ProjectDetailApiView(APIView):
         )
 
 
-
 class ApplicationView(APIView):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -168,7 +159,7 @@ class ApplicationView(APIView):
             return Response({"application": serializer.data})
         applications = Application.objects.all()
         serializer = ApplicationSerializer(applications, many=True)
-        return Response({"applications": serializer.data})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         application = request.data.get('application')
@@ -177,7 +168,7 @@ class ApplicationView(APIView):
         serializer = ApplicationSerializer(data=application)
         if serializer.is_valid(raise_exception=True):
             application_saved = serializer.save()
-        return Response({"success": "application '{}' created successfully".format(application_saved.title)})
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def put(self, request, pk):
         saved_application = get_object_or_404(Application.objects.all(), pk=pk)
@@ -186,14 +177,13 @@ class ApplicationView(APIView):
 
         if serializer.is_valid(raise_exception=True):
             application_saved = serializer.save()
-        return Response({"success": "application '{}' updated successfully".format(application_saved.title)})
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, pk):
         # Get object with this pk
         application = get_object_or_404(Application.objects.all(), pk=pk)
         application.delete()
-        return Response({"message": "application with id `{}` has been deleted.".format(pk)}, status=204)
-
+        return Response(application.data, status=status.HTTP_204_NO_CONTENT)
 
 
 class RoleView(APIView):
@@ -231,7 +221,6 @@ class RoleView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class RoleDetailApiView(APIView):
