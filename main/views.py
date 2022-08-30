@@ -1,73 +1,119 @@
-from django.shortcuts import render
-from django.views.generic.base import TemplateView
-from rest_framework import permissions
-from django.template.context_processors import csrf
-from django.shortcuts import redirect, render
+from rest_framework.generics import get_object_or_404
+
 from .models import Talent
-from django.http import HttpResponse, JsonResponse
-from django.template import loader
-from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, generics
 from .serializer import TalentRegistrationSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import get_object_or_404
-from django.shortcuts import render
-from rest_framework.decorators import api_view
 
-
-class TalentViews(APIView):
-    # permission_classes = (permissions.AllowAny,)
-    # http_method_names = ['get', 'head']
-    def get(self, request,  format=None):
-         talents = Talent.objects.all()
-         serializer = TalentRegistrationSerializer(talents, many=True)
-         return Response(serializer.data)
-
-    def post(self, request):
-        serializer = TalentRegistrationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(request)
-            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class TalentDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Talent.objects.all()
-    serializer_class = TalentRegistrationSerializer
 
 class TalentRegistrationView(APIView):
     serializer_class = TalentRegistrationSerializer
 
 
-def index(request):
-    template = loader.get_template('index.html')
-    # tasks = Task.objects.order_by("id")
-    # more_tasks = Task.objects.filter()
-    context = {'tasks': "welcome"}
-    context.update(csrf(request))
-    # return render('index.html', context)
-    return HttpResponse(template.render(context, request))
+class TalentViews(APIView):
+
+    def get(self, request, format=None):
+        talents = Talent.objects.all()
+        serializer = TalentRegistrationSerializer(talents, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-    # def get(self, request, *args, **kwargs):
-    #     applications = Application.objects.all()
-    #     serializer = ApplicationSerializer(applications, many=True)
-    #     return Response({"applications": serializer.data})
-    #
-    # def post(self, request, *args, **kwargs):
-    #     application = request.data.get('application')
-    #
-    #     serializer = ApplicationSerializer(data=application)
-    #     if serializer.is_valid(raise_exception=True):
-    #         application_saved = serializer.save()
-    #     return Response({"success": "Application '{}' created successfully".format(application)})
+    def post(self, request):
+        talents = request.data.get('talents')
+
+        serializer = TalentRegistrationSerializer(data=talents)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def put(self, request, pk):
+        saved_talent = get_object_or_404(Talent.objects.all(), pk=pk)
+        data = request.data.get('application')
+        serializer = TalentRegistrationSerializer(instance=saved_talent, data=data, partial=True)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, pk):
+        # Get object with this pk
+        talent = get_object_or_404(Talent.objects.all(), pk=pk)
+        talent.delete()
+        return Response(talent.data, status=status.HTTP_204_NO_CONTENT)
 
 
-    # permission_classes = (permissions.AllowAny,)
-    # http_method_names = ['get', 'head']
-    #
-    # queryset = Group.objects.all()
-    # serializer_class = ApplicationSerializer
+class TalentDetailView(APIView):
+    # add permission to check if user is authenticated
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, talent_name_id):
+        '''
+        Helper method to get the object with given project_name_id, and user_id
+        '''
+        try:
+            return Talent.objects.get(id=talent_name_id)
+        except Talent.DoesNotExist:
+            return None
+
+    # 3. Retrieve
+    def get(self, request, talent_name_id, *args, **kwargs):
+        '''
+        Retrieves the Talent with given company_name_id
+        '''
+        talent_instance = self.get_object(talent_name_id)
+        if not talent_instance:
+            return Response(
+                {"res": "Object with project id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = TalentRegistrationSerializer(talent_instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # 4. Update
+    def put(self, request, talent_name_id, *args, **kwargs):
+        '''
+        Updates the Talent item with given id if exists
+        '''
+        talent_instance = self.get_object(talent_name_id)
+        if not talent_instance:
+            return Response(
+                {"res": "Object with instance id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        data = {
+            'username': request.data.get('username'),
+            'bio': request.data.get('bio'),
+            'phone_number': request.data.get('phone_number'),
+            'gender': request.data.get('gender'),
+            'age': request.data.get('age'),
+            'weight': request.data.get('weight'),
+            'height': request.data.get('height'),
+            'email': request.data.get('email'),
+            # 'user': request.user.id
+
+        }
+        serializer = TalentRegistrationSerializer(instance=talent_instance, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # 5. Delete
+    def delete(self, request, talent_name_id, *args, **kwargs):
+        '''
+        Deletes the Talent item with given id if exists
+        '''
+        talent_instance = self.get_object(talent_name_id)
+        if not talent_instance:
+            return Response(
+                {"res": "Object with talent id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        talent_instance.delete()
+        return Response(
+            {"res": "Object deleted!"},
+            status=status.HTTP_200_OK
+        )

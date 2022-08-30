@@ -241,14 +241,14 @@ class RoleDetailApiView(APIView):
         '''
         Retrieves the project with given company_name_id
         '''
-        todo_instance = self.get_object(role_name_id, request.company_name_id)
-        if not todo_instance:
+        role_instance = self.get_object(role_name_id)
+        if not role_instance:
             return Response(
                 {"res": "Object with project id does not exists"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = RoleSerializer(todo_instance)
+        serializer = RoleSerializer(role_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 4. Update
