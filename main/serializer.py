@@ -15,7 +15,7 @@ class TalentSerializer(serializers.Serializer):
     phone_number = serializers.CharField(required =True)
 
     def validate_age(self, age):
-        if age < -2 or age > +2:
+        if age < (age-2) or age > (age+2):
             return False
 
     def create(self, validated_data):
