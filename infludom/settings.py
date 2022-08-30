@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
-import django_on_heroku
+# import django_on_heroku
 from infludom.django_secret_key import key_generator
 import  environ
 
@@ -27,13 +27,13 @@ SECRET_KEY = key_generator()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-django_on_heroku.settings(locals())
+# django_on_heroku.settings(locals())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # DEBUG = int(os.environ.get('DEBUG', default=1))
 
 
-ALLOWED_HOSTS = ['*', 'https://optimusea.herokuapp.com/' ]
+ALLOWED_HOSTS = [ ]
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 # Application definition
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # 'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
     'drf_yasg',
+    'company',
     # 'rest_framework_swagger',
 
 ]
@@ -120,13 +121,13 @@ DATABASES = {
 # DATABASES['default'].update(db_from_env)
 # DATABASES['default']['CONN_MAX_AGE'] = 500
 
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-    }
-}
+#
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#         'LOCATION': 'unique-snowflake',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -179,13 +180,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     'rest_framework.permissions.IsAuthenticated',
 # ],
 # }
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-}
+#
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#     ),
+# }
 
 SITE_ID = 1
 
