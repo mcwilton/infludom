@@ -28,7 +28,9 @@ SECRET_KEY = key_generator()
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # django_on_heroku.settings(locals())
+
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 # DEBUG = int(os.environ.get('DEBUG', default=1))
 
@@ -50,16 +52,13 @@ INSTALLED_APPS = [
     'rest_registration',
     'allauth',
     'allauth.account',
-    # 'rest_auth',
-    # 'rest_auth.registration',
     'rest_framework.authtoken',
     'corsheaders',
     # 'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
     'drf_yasg',
     'company',
-    # 'rest_framework_swagger',
-
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,7 +73,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
+
 ROOT_URLCONF = 'infludom.urls'
+
 
 TEMPLATES = [
     {
@@ -97,6 +98,7 @@ WSGI_APPLICATION = 'infludom.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
@@ -121,13 +123,13 @@ DATABASES = {
 # DATABASES['default'].update(db_from_env)
 # DATABASES['default']['CONN_MAX_AGE'] = 500
 
-#
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-#         'LOCATION': 'unique-snowflake',
-#     }
-# }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -158,21 +160,23 @@ USE_I18N = True
 
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 # REST_FRAMEWORK = {
 #     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 #     'PAGE_SIZE': 10,
-
 # 'DEFAULT_AUTHENTICATION_CLASSES': [
 #     'rest_framework_simplejwt.authentication.JWTAuthentication',
 # ],
@@ -188,9 +192,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     ),
 # }
 
+
 SITE_ID = 1
 
-# AUTH_USER_MODEL = 'main.USER'
+
 
 REST_REGISTRATION = {
     'REGISTER_VERIFICATION_ENABLED': False,

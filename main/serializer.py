@@ -2,13 +2,13 @@ from rest_framework import serializers
 from .models import Talent
 
 
-class TalentRegistrationSerializer(serializers.ModelSerializer):
+class TalentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Talent
         fields = ['bio', 'phone_number', 'gender']
 
     def get_cleaned_data(self):
-        data = super(TalentRegistrationSerializer, self).get_cleaned_data()
+        data = super(TalentSerializer, self).get_cleaned_data()
         extra_data = {
             'bio': self.validated_data.get('bio', ''),
         }
@@ -16,7 +16,7 @@ class TalentRegistrationSerializer(serializers.ModelSerializer):
         return data
 
     def save(self, request):
-        user = super(TalentRegistrationSerializer, self).save(request)
+        user = super(TalentSerializer, self).save(request)
         user.is_talent = True
         user.save()
         talent = Talent(talent=user, bio=self.cleaned_data.get('bio'))

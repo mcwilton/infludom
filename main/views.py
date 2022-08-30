@@ -2,28 +2,37 @@ from rest_framework.generics import get_object_or_404
 
 from .models import Talent
 from rest_framework import viewsets, generics
-from .serializer import TalentRegistrationSerializer
+from .serializer import TalentSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
 class TalentRegistrationView(APIView):
-    serializer_class = TalentRegistrationSerializer
+    serializer_class = TalentSerializer
 
 
 class TalentViews(APIView):
 
     def get(self, request, format=None):
         talents = Talent.objects.all()
-        serializer = TalentRegistrationSerializer(talents, many=True)
+        serializer = TalentSerializer(talents, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def post(self, request):
-        talents = request.data.get('talents')
+        talents = request.data.get('talents'),
 
-        serializer = TalentRegistrationSerializer(data=talents)
+        # 'username': request.data.get('username'),
+        # 'bio': request.data.get('bio'),
+        # 'phone_number': request.data.get('phone_number'),
+        # 'gender': request.data.get('gender'),
+        # 'age': request.data.get('age'),
+        # 'weight': request.data.get('weight'),
+        # 'height': request.data.get('height'),
+        # 'email': request.data.get('email'),
+
+        serializer = TalentSerializer(data=talents)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -31,7 +40,7 @@ class TalentViews(APIView):
     def put(self, request, pk):
         saved_talent = get_object_or_404(Talent.objects.all(), pk=pk)
         data = request.data.get('application')
-        serializer = TalentRegistrationSerializer(instance=saved_talent, data=data, partial=True)
+        serializer = TalentSerializer(instance=saved_talent, data=data, partial=True)
 
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -69,7 +78,7 @@ class TalentDetailView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = TalentRegistrationSerializer(talent_instance)
+        serializer = TalentSerializer(talent_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 4. Update
@@ -95,7 +104,7 @@ class TalentDetailView(APIView):
             # 'user': request.user.id
 
         }
-        serializer = TalentRegistrationSerializer(instance=talent_instance, data=data, partial=True)
+        serializer = TalentSerializer(instance=talent_instance, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

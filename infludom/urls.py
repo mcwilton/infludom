@@ -34,7 +34,7 @@ schema_view = get_schema_view(
    permission_classes=[permissions.AllowAny],
 )
 
-router = routers.DefaultRouter()
+# router = routers.DefaultRouter()
 # router.register(r'talent', views.TalentViewSet)
 # router.register(r'projects', views.ProjectViewSet)
 
@@ -46,9 +46,8 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('talent/', include('main.urls')),
     path('company/', include('company.urls')),
-    path('api_urls/', include(router.urls)),
+    # path('api_urls/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # path('api-auth/', include('rest_framework.urls')),
 
  ]
 
