@@ -35,7 +35,7 @@ DEBUG = True
 # DEBUG = int(os.environ.get('DEBUG', default=1))
 
 
-ALLOWED_HOSTS = [ ]
+ALLOWED_HOSTS = ['*' ]
 # ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 # Application definition
