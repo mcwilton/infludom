@@ -1,9 +1,9 @@
 Django==4
-django-environ
-django-rest-swagger
-djangorestframework
-djangorestframework-simplejwt
-PyJWT
+django-environ==0
+django-rest-swagger==2
+djangorestframework==3
+djangorestframework-simplejwt==5
+PyJWT==2
 django-cors-headers
 django-allauth
 drf-yasg2
