@@ -2,6 +2,14 @@
 
 Infludom is an Influencer API platform.
 
+A Django API for a casting platform
+-Users will be able to create accounts as talents
+-add data about themselves
+-Casting companies will create accounts as companies and create projects, which will have roles
+-Talents will be able to apply for roles
+-Companies will be able to see applicants for each role
+
+
 To install, download the files from Github with the link below:
 https://github.com/mcwilton/infludom.git
 
@@ -12,6 +20,7 @@ Run with python manage.py runserver
 To view the API online, visit the below website address:
 http://infludom.pythonanywhere.com/
 
+![image](https://user-images.githubusercontent.com/20909827/188434936-67e43ef4-7e31-4e0a-9d84-91cf8da3c713.png)
 
 Some of the API direct links:
 
