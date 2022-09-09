@@ -6,7 +6,7 @@ app_name = 'company'
 
 urlpatterns = [
     path('projects/', ProjectView.as_view(), name ='ProjectsView'),
-    path('projects/<int:project_id>/', ProjectsDetail.as_view()),
+    path('projects/<int:pk>/', ProjectsDetail.as_view()),
     path('applications/', ApplicationView.as_view()),
     path('applications/<int:pk>', ApplicationDetail.as_view()),
     path('registration/', CompaniesView.as_view()),

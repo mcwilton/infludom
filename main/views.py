@@ -1,6 +1,5 @@
 from django.http import Http404
 from rest_framework.generics import get_object_or_404
-
 from .models import Talent
 from rest_framework import viewsets, generics
 from .serializer import TalentSerializer

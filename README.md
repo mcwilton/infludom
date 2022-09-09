@@ -7,6 +7,8 @@ https://github.com/mcwilton/infludom.git
 
 Create a Python environment
 
+Install packages via pip install -r requirements.txt
+
 Run with python manage.py runserver
 
 To view the API online, visit the below website address:
@@ -15,28 +17,16 @@ http://infludom.pythonanywhere.com/
 
 Some of the API direct links:
 
-http://infludom.pythonanywhere.com/talent/talent/
+http://127.0.0.1:8000/talent/talent/
 
-http://infludom.pythonanywhere.comtalent/talent<drf_format_suffix:format>
+http://127.0.0.1:8000/talent/talent/1/
 
-http://infludom.pythonanywhere.com/talent/talent/1/
+http://127.0.0.1:8000/talent/registration/
 
-http://infludom.pythonanywhere.com/talent/talent/<int:pk><drf_format_suffix:format>
+http://127.0.0.1:8000/company/projects/
 
-http://infludom.pythonanywhere.com/talent/registration/
+http://127.0.0.1:8000/company/applications/
 
-http://infludom.pythonanywhere.com/talent/registration/<drf_format_suffix:format>
+http://127.0.0.1:8000/company/registration/
 
-http://infludom.pythonanywhere.com/company/projects/ 
-
-http://infludom.pythonanywhere.com/company/projects/<int:project_id>
-
-http://infludom.pythonanywhere.com/company/applications/
-
-http://infludom.pythonanywhere.com/company/applications/<int:pk>
-
-http://infludom.pythonanywhere.com/company/registration/
-
-http://infludom.pythonanywhere.com/company/roles/
-
-http://infludom.pythonanywhere.com/company/roles/<int:role_name_id>
+http://127.0.0.1:8000/company/roles/

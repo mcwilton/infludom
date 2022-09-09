@@ -38,28 +38,32 @@ class Talent(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='talent', default="")
     bio = models.TextField(max_length=500, blank=True)
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
-    gender = models.CharField(choices=GENDER_CHOICES, default="Prefer Not To Say", max_length=250)
+    gender = models.CharField(choices=GENDER_CHOICES, default="Prefer Not To Say", max_length=25)
     ethnicity = models.ForeignKey(Talent_Ethnicity, models.SET_NULL, null=True, related_name='talent ethnicity+')
     age = models.CharField(max_length=3)
     weight = models.DecimalField(max_digits=6, max_length=10, decimal_places=4, null=True)
     height = models.DecimalField(max_digits=6, max_length=10, decimal_places=4, null=True)
-    email = models.EmailField(max_length=254)
+    # weight = models.FloatField()
+    # height = models.FloatField()
+    email = models.EmailField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.talent.username
 
+if User.is_talent == True:
+    @receiver(post_save, sender=User)
+    def create_talent_profile(sender, instance, created, **kwargs):
+        if created:
+            Talent.objects.create(username=instance)
 
-@receiver(post_save, sender=User)
-def create_talent_profile(sender, instance, created, **kwargs):
-    if created:
-        Talent.objects.create(username=instance)
+    @receiver(post_save, sender=User)
+    def save_talent_profile(sender, instance, **kwargs):
+        instance.talent.save()
 
-@receiver(post_save, sender=User)
-def save_talent_profile(sender, instance, **kwargs):
-    instance.talent.save()
-
+else:
+    pass
 
 
 
