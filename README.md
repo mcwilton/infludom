@@ -14,6 +14,7 @@ Run with python manage.py runserver
 To view the API online, visit the below website address:
 http://infludom.pythonanywhere.com/
 
+https://3.73.15.78:8000 - On AWS
 
 Some of the API direct links:
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="3.73.15.78" id="431dde87-c8c9-4b50-b2b2-4518ea68c9a8" keyPath="C:\Users\mcwil\Pictures\LightsailDefaultKey-eu-central-1.pem" port="22" nameFormat="DESCRIPTIVE" username="bitnami" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>

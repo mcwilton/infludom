@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d3a97f07-7e53-4d1f-9fd7-7943f7f474c5" name="infludom" url="http://3.73.15.78">
+        <fileTransfer rootFolder="/home/bitnami/der" accessType="SFTP" host="3.73.15.78" port="22" sshConfigId="431dde87-c8c9-4b50-b2b2-4518ea68c9a8" sshConfig="bitnami@3.73.15.78:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+    <groups>
+      <group>
+        <name>aws</name>
+        <servers>
+          <name value="infludom" />
+        </servers>
+      </group>
+    </groups>
+  </component>
+</project>

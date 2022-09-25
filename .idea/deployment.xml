@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" promptOnRemoteOverwrite="CHECK_CONTENT" serverName="aws" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="infludom">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/infludom" local="$PROJECT_DIR$" web="3.73.15.78" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
