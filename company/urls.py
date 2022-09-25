@@ -15,3 +15,5 @@ urlpatterns = [
     path('roles/<int:role_name_id>/', RoleDetail.as_view()),
 
 ]
+
+
